@@ -94,5 +94,64 @@
 //MODULE 2: THE REVEALING MODULE PATTERN
 
 (function(){
+    /* This pattern defines all the functions and variables in the private scope, to then return an anonymous object with
+    pointers to the private functionality wished to reveal as public*/
+
+    //EXAMPLE 1
+    myRevealingModule = (function(){
+
+        var privateVar = "Ben Cherry";
+        var publicVar = "Hey";
+
+        function privateFunction(){
+            console.log("Name: " + privateVar);
+        }
+
+        function publicSetName(strName){
+            privateVar = strName;
+        }
+
+        function publicGetName(){
+            privateFunction();
+        }
+
+        return{
+            setName: publicSetName,
+            greeting: publicVar,
+            getName: publicGetName
+        }
+    })();
+
+    myRevealingModule.setName("Paul");
+
+    //EXAMPLE 2
+    var myRevealingModule2 = (function(){
+
+        var privateCounter = 0;
+
+        function privateFunction(){
+            privateCounter++;
+        }
+
+        function publicFunction(){
+            publicIncrement();
+        }
+
+        function publicIncrement(){
+            privateFunction();
+        }
+
+        function publicGetCount(){
+            return privateCounter;
+        }
+
+        return{
+            start: publicFunction,
+            increment: publicIncrement,
+            count: publicGetCount
+        }
+    })();
+
+    myRevealingModule.start();
     
 })();
